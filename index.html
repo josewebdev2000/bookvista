@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="en" data-bs-theme="auto">
+  <head><script src="assets/js/color-modes.js"></script>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="BookVista Library Web App">
+    <meta name="author" content="josewebdev2000">
+
+    <title>BookVista</title>
+
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
+
+    <!--Boostrap CSS-->
+    <link href="assets/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!--Bootstrap Icons-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!--jQuery JS-->
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+
+    <!--Custom CSS-->
+    <link rel="stylesheet" href="css/styles.css">
+
+    <!--Custom Theme CSS-->
+    <link rel="stylesheet" href="css/dark.css" id="theme-stylesheet">
+
+    <!--Custom JS Constants-->
+    <script src="js/constants/constants.js"></script>
+
+    <!--Custom JS Helper Functions-->
+    <script src="js/helpers.js"></script>
+
+    <!--Custom JS Classes-->
+    <script src="js/oop/ChildAppender.js"></script>
+    <script src="js/oop/ElementRemover.js"></script>
+    <script src="js/oop/NumInput.js"></script>
+    <script src="js/oop/ThemeChanger.js"></script>
+
+    <!--Custom UI Snippets-->
+    <script src="js/ui/html_snippets/main-page-b-spinner.js"></script>
+    <script src="js/ui/html_snippets/main-page-alert.js"></script>
+    <script src="js/ui/html_snippets/main-page-book-card.js"></script>
+
+    <!--Custom JS-->
+    <script src="js/ajax/books.js"></script>
+    <script src="js/ui/books.js"></script>
+    <script src="js/index.js"></script>
+
+    
+  </head>
+  <body>
+    <header>
+      <div id="dom-hidder" class="overlay"></div>
+      <nav class="navbar fixed-top bd-mode-toggle">
+        <div class="container-fluid d-flex justify-content-end mt-2">
+          <button class="btn btn-outline-primary rounded-circle" id="sidebar-shower" data-bs-toggle="collapse" data-bs-target="#sidebar" aria-expanded="false" aria-controls="sidebar"><i class="bi bi-search"></i></button>
+        </div>
+        
+        <!-- Sidebar -->
+        <div class="collapse collapse-horizontal" id="sidebar">
+          <!-- Sidebar content goes here -->
+            <h5 class="text-center">Search Books by Title</h5>
+            <form class="text-center">
+              <div class="form-group p-2">
+                <input type="text" class="form-control text-center" id="search-book-title" placeholder="Enter book title">
+              </div>
+              <button type="button" id="search-book-btn" class="btn btn-primary">Go</button>
+            </form>
+        </div>
+      </nav>
+    </header>
+    
+    <!--SVG For Dark/Light Theme Toggler-->
+    <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+      <symbol id="check2" viewBox="0 0 16 16">
+        <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+      </symbol>
+      <symbol id="circle-half" viewBox="0 0 16 16">
+        <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"/>
+      </symbol>
+      <symbol id="moon-stars-fill" viewBox="0 0 16 16">
+        <path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/>
+        <path d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z"/>
+      </symbol>
+      <symbol id="sun-fill" viewBox="0 0 16 16">
+        <path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/>
+      </symbol>
+    </svg>
+
+    <!--Dark/Light Theme Toggler-->
+    <div class="dropdown position-fixed bottom-0 end-0 mb-3 me-3 bd-mode-toggle">
+      <button class="btn btn-bd-primary py-2 dropdown-toggle d-flex align-items-center"
+              id="bd-theme"
+              type="button"
+              aria-expanded="false"
+              data-bs-toggle="dropdown"
+              aria-label="Toggle theme (auto)">
+        <svg class="bi my-1 theme-icon-active" width="1em" height="1em"><use href="#circle-half"></use></svg>
+        <span class="visually-hidden" id="bd-theme-text">Toggle theme</span>
+      </button>
+      <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="bd-theme-text">
+        <li>
+          <button type="button" id="light-theme-btn" class="dropdown-item d-flex align-items-center" data-bs-theme-value="light" aria-pressed="false">
+            <svg class="bi me-2 opacity-50 theme-icon" width="1em" height="1em"><use href="#sun-fill"></use></svg>
+            Light
+            <svg class="bi ms-auto d-none" width="1em" height="1em"><use href="#check2"></use></svg>
+          </button>
+        </li>
+        <li>
+          <button type="button" id="dark-theme-btn" class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark" aria-pressed="false">
+            <svg class="bi me-2 opacity-50 theme-icon" width="1em" height="1em"><use href="#moon-stars-fill"></use></svg>
+            Dark
+            <svg class="bi ms-auto d-none" width="1em" height="1em"><use href="#check2"></use></svg>
+          </button>
+        </li>
+      </ul>
+    </div>
+
+    <main>
+      <!--Header-->
+      <div class="px-4 py-5 my-5 text-center">
+        <img class="d-block mx-auto mb-4" src="assets/img/book.png" alt="Book Picture" width="72" height="57">
+        <h1 class="display-5 fw-bold text-body-emphasis">BookVista</h1>
+        <div class="col-lg-6 mx-auto">
+          <p class="lead mb-4">Your literary haven for exploration. Discover, organize, and dive into a world of books. A personalized library experience tailored to your reading journey.</p>
+          <button type="button" id="new-book" class="btn btn-primary btn-lg px-4 gap-3" data-bs-toggle="modal" data-bs-target="#post-book-modal">New Book</button>
+        </div>
+      </div>
+
+      <!--Content Body-->
+      <div class="album py-5 bg-body-tertiary">
+        <div class="container">
+          <!--Where all books will go-->
+          <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 justify-content-center" id="books-container">
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="d-flex flex-wrap justify-content-center align-items-center py-3 my-4 border-top">
+      <a href="https://github.com/josewebdev2000" class="text-white link-opacity-50-hover me-4" target="_blank"><i class="bi bi-github" id="git-icon"></i></a>
+      <span class="mb-3 mb-md-0 text-body-secondary"><a href="https://github.com/josewebdev2000" class="no-underline" target="_blank">&copy; josewebdev2000</a></span>
+    </footer>
+
+    <!--Modals-->
+    <div id="modals-container">
+      <div class="modal fade" id="view-book-modal" tabindex="-1" aria-labelledby="viewBookModal" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title"></h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal fade" id="post-book-modal" tabindex="-1" aria-labelledby="postBookModal" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="default-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Post New Book</h1>
+                <button type="button" class="btn-close" id="btn-new-book-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form id="post-new-book-form">
+                  <div class="mb-3">
+                    <label for="new-book-title" class="form-label">Title</label>
+                    <input type="text" class="form-control" id="new-book-title">
+                  </div>
+                  <div class="mb-3">
+                    <label for="new-book-author" class="form-label">Author</label>
+                    <input type="text" class="form-control" id="new-book-author">
+                  </div>
+                  <div class="mb-3">
+                    <label for="new-book-cover" class="form-label">Image Cover URL</label>
+                    <input type="url" class="form-control" id="new-book-cover">
+                  </div>
+                  <div class="mb-3">
+                    <label for="new-book-pages" class="form-label">Number of Pages</label>
+                    <input type="number" class="form-control" id="new-book-pages" min="0">
+                  </div>
+                  <div class="mb-3">
+                    <label for="book-read" class="form-label">Read It Yet?</label>
+                    <div class="m-1">
+                      <div class="btn-group w-100" role="group">
+                        <input type="radio" class="btn-check" name="book-read" id="new-book-yes" value="yes" autocomplete="off">
+                        <label class="btn btn-outline-success" for="new-book-yes">Yes</label>
+    
+                        <input type="radio" class="btn-check" name="book-read" id="new-book-no" value="no" autocomplete="off" checked>
+                        <label class="btn btn-outline-danger" for="new-book-no">No</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <label for="new-book-description" class="form-label">Description</label>
+                    <textarea class="form-control" id="new-book-description"></textarea>
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <div class="btn-group w-100" role="group">
+                  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary" id="btn-new-book-submit">Submit</button>    
+                </div>
+              </div>
+            </div>
+            <div class="error-content">
+              <div class="modal-header">  
+              </div>
+    
+            <div class="modal-body">
+              <div class="alert alert-danger" id="main-page-error-alert" role="alert">
+                <h2 id="error-post-modal-title" class="error-title"></h2>
+                <img src="assets/img/oops.png" alt="Error Picture">
+                <p class="error-message" id="error-post-modal-message"></p>
+              </div>
+            </div>
+    
+            <div class="modal-footer">
+              <div class="btn-group w-100" role="group">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                <button class="btn btn-primary" id="btn-try-again">Try Again</button>
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal fade" id="edit-book-modal" tabindex="-1" aria-labelledby="editBookModal" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="default-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="edit-modal-title"></h1>
+                <button type="button" class="btn-close" id="btn-edit-book-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form id="edit-book-form">
+                  <div class="mb-3">
+                    <label for="edit-book-title" class="form-label">Title</label>
+                    <input type="text" class="form-control" id="edit-book-title">
+                  </div>
+                  <div class="mb-3">
+                    <label for="edit-book-author" class="form-label">Author</label>
+                    <input type="text" class="form-control" id="edit-book-author">
+                  </div>
+                  <div class="mb-3">
+                    <label for="edit-book-cover" class="form-label">Image Cover URL</label>
+                    <input type="url" class="form-control" id="edit-book-cover">
+                  </div>
+                  <div class="mb-3">
+                    <label for="edit-book-pages" class="form-label">Number of Pages</label>
+                    <input type="number" class="form-control" id="edit-book-pages" min="0">
+                  </div>
+                  <div class="mb-3">
+                    <label for="edit-book-read" class="form-label">Read It Yet?</label>
+                    <div class="m-1">
+                      <div class="btn-group w-100" role="group">
+                        <input type="radio" class="btn-check" name="edit-book-read" id="edit-book-yes" value="yes" autocomplete="off">
+                        <label class="btn btn-outline-success" for="edit-book-yes">Yes</label>
+    
+                        <input type="radio" class="btn-check" name="edit-book-read" id="edit-book-no" value="no" autocomplete="off" checked>
+                        <label class="btn btn-outline-danger" for="edit-book-no">No</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <label for="edit-book-description" class="form-label">Description</label>
+                    <textarea class="form-control" id="edit-book-description"></textarea>
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <div class="btn-group w-100" role="group">
+                  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary" id="btn-edit-book-submit">Submit</button>    
+                </div>
+              </div>
+            </div>
+            <div class="error-content">
+              <div class="modal-header">  
+              </div>
+    
+            <div class="modal-body">
+              <div class="alert alert-danger" id="main-page-error-alert" role="alert">
+                <h2 id="error-edit-modal-title" class="error-title"></h2>
+                <img src="assets/img/oops.png" alt="Error Picture">
+                <p class="error-message" id="error-edit-modal-message"></p>
+              </div>
+            </div>
+    
+            <div class="modal-footer">
+              <div class="btn-group w-100" role="group">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                <button class="btn btn-primary" id="btn-edit-try-again">Try Again</button>
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal fade" id="delete-book-modal" tabindex="-1" aria-labelledby="deleteBookModal" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Confirm Deletion</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+              <div class="btn-group w-100" role="group">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" id="btn-confirm-delete">Delete</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--Boostrap JS-->
+    <script src="assets/dist/js/bootstrap.bundle.min.js"></script>
+    <!--Website Translation-->
+    <div class="gtranslate_wrapper"></div>
+    <script>window.gtranslateSettings = {"default_language":"en","native_language_names":true,"detect_browser_language":true,"languages":["en","es"],"wrapper_selector":".gtranslate_wrapper","horizontal_position":"left","vertical_position":"bottom","flag_style":"3d"}</script>
+    <script src="https://cdn.gtranslate.net/widgets/latest/flags.js" defer></script>
+  </body>
+</html>
