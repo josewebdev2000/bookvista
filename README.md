@@ -1,6 +1,6 @@
 # BookVista
 <div align="center">
-    <img src="assets/img/book.png" alt="BookVista Icon" width="400">
+    <img src="assets/img/book.png" alt="BookVista Icon" width="200">
 </div>
 
 ## Overview
